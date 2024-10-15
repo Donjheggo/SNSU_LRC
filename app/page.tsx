@@ -1,9 +1,9 @@
 import HomeLayout from "@/components/home-layout";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Calendar, Users, CheckSquare } from "lucide-react";
+import { Users, CalendarSearch, CalendarPlus } from "lucide-react";
 import attendance from "@/app/attendance.png";
-import rooms from "@/app/rooms.png";
+import appointments from "@/app/appointments.png";
 import book from "@/app/book.png";
 import Image from "next/image";
 
@@ -42,7 +42,7 @@ export default function LandingPage() {
               <a href={book.src} download="book-image">
                 <Image src={book} alt="book" width={500} height={500} />
               </a>
-              <Calendar className="h-12 w-12 text-primary" />
+              <CalendarPlus className="h-12 w-12 text-primary" />
               <h3 className="text-xl font-bold">Easy Booking</h3>
               <p className="text-sm text-gray-500 ">
                 Book rooms and resources with just a few clicks.
@@ -64,13 +64,18 @@ export default function LandingPage() {
               </p>
             </div>
             <div className="flex flex-col items-center space-y-3 text-center p-6 bg-white dark:bg-gray-700 border rounded-lg  transition-transform hover:scale-105">
-              <a href={rooms.src} download="rooms-image">
-                <Image src={rooms} alt="rooms" width={500} height={500} />
+              <a href={appointments.src} download="appointments-image">
+                <Image
+                  src={appointments}
+                  alt="appointments"
+                  width={500}
+                  height={500}
+                />
               </a>
-              <CheckSquare className="h-12 w-12 text-primary" />
-              <h3 className="text-xl font-bold">Room Management</h3>
+              <CalendarSearch className="h-12 w-12 text-primary" />
+              <h3 className="text-xl font-bold">View Appointments</h3>
               <p className="text-sm text-gray-500 ">
-                Efficiently manage and monitor room usage.
+                Check your appointment submission.
               </p>
             </div>
           </div>

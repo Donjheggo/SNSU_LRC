@@ -93,10 +93,6 @@ const userLinks = [
     href: "/attendance",
   },
   {
-    name: "Rooms",
-    href: "/rooms",
-  },
-  {
     name: "Appointments",
     href: "/appointments",
   },
