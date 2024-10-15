@@ -69,8 +69,8 @@ export default function HomeLayout({
       <main className="min-h-[87vh] p-5 grid gap-6 container max-w-screen-xl mx-auto">
         {children}
       </main>
-      <footer className="w-full py-4 px-4 border-t border-gray-200 dark:border-gray-700">
-        <div className="container mx-auto flex flex-col sm:flex-row justify-between items-center">
+      <footer className="w-full py-4 px-4 md:px-6 border-t border-gray-200 dark:border-gray-700">
+        <div className="container mx-auto max-w-screen-xl flex flex-col sm:flex-row justify-between items-center">
           <p className="text-sm text-gray-500 dark:text-gray-400">
             © 2024 SNSU LRC
           </p>
