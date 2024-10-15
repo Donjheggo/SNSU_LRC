@@ -28,8 +28,10 @@ import { Loader } from "lucide-react";
 import { GetScheduleByRoomId } from "@/lib/actions/schedules";
 import type { RoomsT } from "@/components/room/update-form";
 import type { SchedulesT } from "@/components/schedules/create-dialog";
+import { useRouter } from "next/navigation";
 
 export default function Book() {
+  const router = useRouter();
   const [rooms, setRooms] = useState<RoomsT[]>([]);
   const [selectedRoomId, setSelectedRoomId] = useState<string>("");
   const [roomSchedules, setRoomSchedules] = useState<SchedulesT[]>([]);
@@ -78,6 +80,7 @@ export default function Book() {
         toast.error(error.toString());
       }
       toast.success("Booking Submitted. 😁");
+      router.push("/appointments");
     } catch (error) {
       toast.error("There was an unexpected error creating.");
     } finally {
@@ -134,18 +137,22 @@ export default function Book() {
                       <SelectGroup>
                         {roomSchedules.length > 0 ? (
                           roomSchedules.map((item, index) => (
-                            <SelectItem key={index} value={item.id} className="w-full">
+                            <SelectItem
+                              key={index}
+                              value={item.id}
+                              className="w-full"
+                            >
                               {new Date(item.start_time).toLocaleDateString()} -
-                              {new Date(
-                                item.start_time
-                              ).toLocaleTimeString()}{" "}
+                              {new Date(item.start_time).toLocaleTimeString()}{" "}
                               <br />
                               {new Date(item.end_time).toLocaleDateString()} -
                               {new Date(item.end_time).toLocaleTimeString()}
                             </SelectItem>
                           ))
                         ) : (
-                          <p className="px-2">No schedules available for this room.</p>
+                          <p className="px-2">
+                            No schedules available for this room.
+                          </p>
                         )}
                       </SelectGroup>
                     </SelectContent>

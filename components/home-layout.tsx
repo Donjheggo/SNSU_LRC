@@ -97,6 +97,10 @@ const userLinks = [
     href: "/rooms",
   },
   {
+    name: "Appointments",
+    href: "/appointments",
+  },
+  {
     name: "Login",
     href: "/auth/sign-in",
   },
