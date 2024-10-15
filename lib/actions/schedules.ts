@@ -150,13 +150,13 @@ export async function GetScheduleByRoomId(room_id: string) {
       .from("schedules")
       .select("*")
       .eq("room_id", room_id)
-      .single();
+      .eq("available", true);
 
     if (error) {
-      return false;
+      return [];
     }
-    return data;
+    return data || [];
   } catch (error) {
-    return false;
+    return [];
   }
 }

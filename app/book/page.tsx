@@ -22,32 +22,51 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useState, useEffect } from "react";
 import { GetAllRooms } from "@/lib/actions/rooms";
-import type { RoomsT } from "@/components/room/update-form";
 import { toast } from "react-toastify";
 import { CreateAppointment } from "@/lib/actions/appointments";
 import { Loader } from "lucide-react";
+import { GetScheduleByRoomId } from "@/lib/actions/schedules";
+import type { RoomsT } from "@/components/room/update-form";
+import type { SchedulesT } from "@/components/schedules/create-dialog";
 
 export default function Book() {
   const [rooms, setRooms] = useState<RoomsT[]>([]);
+  const [selectedRoomId, setSelectedRoomId] = useState<string>("");
+  const [roomSchedules, setRoomSchedules] = useState<SchedulesT[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
+  const fetchRoomSchedule = async () => {
+    if (selectedRoomId) {
+      const data = await GetScheduleByRoomId(selectedRoomId);
+      if (data) setRoomSchedules(data);
+    }
+  };
+
+  const fetchRooms = async () => {
+    const data = await GetAllRooms();
+    if (data) setRooms(data);
+  };
+
   useEffect(() => {
-    const fetchRooms = async () => {
-      const data = await GetAllRooms();
-      if (data) setRooms(data);
-    };
     fetchRooms();
   }, []);
+
+  useEffect(() => {
+    if (selectedRoomId) {
+      fetchRoomSchedule();
+    }
+  }, [selectedRoomId]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     if (
       !formData.get("room_id") ||
+      !formData.get("schedule_id") ||
       !formData.get("name") ||
       !formData.get("course_and_year") ||
-      !formData.get("date") ||
-      !formData.get("purpose")
+      !formData.get("purpose") ||
+      !formData.get("participants_count")
     ) {
       toast.error("Please fill in all the required fields correctly.");
       return;
@@ -68,7 +87,7 @@ export default function Book() {
 
   return (
     <HomeLayout>
-      <Card className="w-auto md:w-[600px] mx-auto h-[500px]">
+      <Card className="w-auto md:w-[600px] mx-auto h-[550px]">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl text-primary">
             Book an Appointment
@@ -83,7 +102,10 @@ export default function Book() {
                   Room
                 </Label>
                 <div className="col-span-3">
-                  <Select name="room_id">
+                  <Select
+                    name="room_id"
+                    onValueChange={(value) => setSelectedRoomId(value)}
+                  >
                     <SelectTrigger className="w-full">
                       <SelectValue placeholder="Select Room" />
                     </SelectTrigger>
@@ -98,6 +120,50 @@ export default function Book() {
                     </SelectContent>
                   </Select>
                 </div>
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="schedule_id" className="text-right">
+                  Schedule
+                </Label>
+                <div className="col-span-3">
+                  <Select name="schedule_id">
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select Schedule" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        {roomSchedules.length > 0 ? (
+                          roomSchedules.map((item, index) => (
+                            <SelectItem key={index} value={item.id} className="w-full">
+                              {new Date(item.start_time).toLocaleDateString()} -
+                              {new Date(
+                                item.start_time
+                              ).toLocaleTimeString()}{" "}
+                              <br />
+                              {new Date(item.end_time).toLocaleDateString()} -
+                              {new Date(item.end_time).toLocaleTimeString()}
+                            </SelectItem>
+                          ))
+                        ) : (
+                          <p className="px-2">No schedules available for this room.</p>
+                        )}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="participants_count" className="text-right">
+                  Participant counts:
+                </Label>
+                <Input
+                  name="participants_count"
+                  id="participants_count"
+                  type="number"
+                  placeholder=""
+                  className="col-span-3"
+                  required
+                />
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="name" className="text-right">
@@ -125,19 +191,7 @@ export default function Book() {
                   required
                 />
               </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="date" className="text-right">
-                  Schedule
-                </Label>
-                <Input
-                  name="date"
-                  id="date"
-                  type="datetime-local"
-                  placeholder=""
-                  className="col-span-3"
-                  required
-                />
-              </div>
+
               <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="purpose" className="text-right">
                   Purpose

@@ -57,7 +57,8 @@ export default async function AppointmentsTable({
               <TableHead className="table-cell">Name</TableHead>
               <TableHead className="table-cell">Course and Year</TableHead>
               <TableHead className="table-cell">Room</TableHead>
-              <TableHead className="table-cell">Date</TableHead>
+              <TableHead className="table-cell">Schedule</TableHead>
+              <TableHead className="table-cell">Participants count</TableHead>
               <TableHead className="table-cell">Purpose</TableHead>
 
               <TableHead>
@@ -68,15 +69,22 @@ export default async function AppointmentsTable({
           <TableBody>
             {appointments?.map((item, index) => (
               <TableRow key={index}>
-                <TableCell className="font-semibold">{item.name}</TableCell>
-                <TableCell className="font-semibold">
-                  {item.course_and_year}
+                <TableCell className="font-semibold text-lg">
+                  {item.name}
                 </TableCell>
-                <TableCell className="font-semibold">
-                  {item.room_id.name}
+                <TableCell>{item.course_and_year}</TableCell>
+                <TableCell>{item.room_id.name}</TableCell>
+                <TableCell>
+                  {new Date(item.schedule_id.start_time).toLocaleDateString()} -{" "}
+                  {new Date(item.schedule_id.start_time).toLocaleTimeString()}
+                  <br />
+                  {new Date(
+                    item.schedule_id.end_time
+                  ).toLocaleDateString()} -{" "}
+                  {new Date(item.schedule_id.end_time).toLocaleTimeString()}
                 </TableCell>
-                <TableCell className="font-semibold">{new Date(item.date).toDateString()}</TableCell>
-                <TableCell className="font-semibold">{item.purpose}</TableCell>
+                <TableCell>{item.participants_count}</TableCell>
+                <TableCell>{item.purpose}</TableCell>
 
                 <TableCell>
                   <DropdownMenu>

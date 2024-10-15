@@ -17,6 +17,7 @@ import { Loader } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Input } from "../ui/input";
 import type { RoomsT } from "./create-dialog";
+import { FormatDateTime } from "@/lib/utils";
 
 export default function UpdateScheduleForm({ item }: { item: SchedulesT }) {
   const router = useRouter();
@@ -48,13 +49,7 @@ export default function UpdateScheduleForm({ item }: { item: SchedulesT }) {
     }
   };
 
-  const formatDateTime = (date: Date) => {
-    const offset = date.getTimezoneOffset() * 60000;
-    const localDateData = new Date(date.getTime() - offset)
-      .toISOString()
-      .slice(0, 16);
-    return localDateData;
-  };
+
 
   return (
     <form onSubmit={handleSubmit}>
@@ -81,7 +76,7 @@ export default function UpdateScheduleForm({ item }: { item: SchedulesT }) {
             type="datetime-local"
             placeholder=""
             required
-            defaultValue={formatDateTime(new Date(item.start_time))}
+            defaultValue={FormatDateTime(new Date(item.start_time))}
           />
         </div>
         <div className="grid gap-2">
@@ -92,7 +87,7 @@ export default function UpdateScheduleForm({ item }: { item: SchedulesT }) {
             type="datetime-local"
             placeholder=""
             required
-            defaultValue={formatDateTime(new Date(item.end_time))}
+            defaultValue={FormatDateTime(new Date(item.end_time))}
           />
         </div>
         <div className="grid gap-2">

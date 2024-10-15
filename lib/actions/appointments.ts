@@ -12,7 +12,7 @@ export async function GetAppointments(
     const supabase = createClient();
     const query = supabase
       .from("appointments")
-      .select(`*, room_id(name)`)
+      .select(`*, room_id(name), schedule_id(*)`)
       .order("created_at", { ascending: false })
       .range((page - 1) * items_per_page, page * items_per_page - 1);
 
@@ -32,6 +32,26 @@ export async function GetAppointments(
   }
 }
 
+async function UpdateScheduleAvailability(id: string) {
+  try {
+    const supabase = createClient();
+    const { error } = await supabase
+      .from("schedules")
+      .update({
+        available: false,
+      })
+      .eq("id", id)
+      .select();
+    if (error) {
+      return { error: error.message };
+    }
+    revalidatePath("dashboard/schedules");
+    return true;
+  } catch (error) {
+    return { error: error };
+  }
+}
+
 export async function CreateAppointment(formData: FormData) {
   try {
     const supabase = createClient();
@@ -39,16 +59,18 @@ export async function CreateAppointment(formData: FormData) {
       .from("appointments")
       .insert({
         room_id: formData.get("room_id"),
+        schedule_id: formData.get("schedule_id"),
         name: formData.get("name"),
         course_and_year: formData.get("course_and_year"),
-        date: formData.get("date"),
         purpose: formData.get("purpose"),
+        participants_count: formData.get("participants_count"),
       })
       .select();
 
     if (error) {
       return { error: error.message };
     }
+    await UpdateScheduleAvailability(formData.get("schedule_id") as string);
     revalidatePath("/dashboard/appointments");
     return { error: "" };
   } catch (error) {
@@ -71,31 +93,6 @@ export async function GetAppointmentById(id: string) {
     return data;
   } catch (error) {
     return false;
-  }
-}
-
-export async function UpdateAppointment(formData: FormData) {
-  try {
-    const supabase = createClient();
-    const { error } = await supabase
-      .from("appointments")
-      .update({
-        room_id: formData.get("room_id"),
-        name: formData.get("name"),
-        course_and_year: formData.get("course_and_year"),
-        date: formData.get("date"),
-        purpose: formData.get("purpose"),
-      })
-      .eq("id", formData.get("id"))
-      .select();
-
-    if (error) {
-      return { error: error };
-    }
-    revalidatePath("/dashboard/appointments");
-    return { error: "" };
-  } catch (error) {
-    return { error: error };
   }
 }
 
