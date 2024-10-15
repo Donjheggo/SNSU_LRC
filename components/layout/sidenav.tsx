@@ -4,7 +4,8 @@ import {
   UsersRound,
   NotepadText,
   School,
-  ListCheck
+  ListCheck,
+  CalendarDays,
 } from "lucide-react";
 import { ThemeToggler } from "../themes/theme-toggler";
 import { signout } from "@/lib/actions/auth";
@@ -19,7 +20,9 @@ export default function Sidenav() {
         <div className="flex h-14 items-center border-b px-4 py-5 lg:h-[60px] lg:px-6 ">
           <Link href="/" className="flex items-center gap-2 font-semibold">
             <Image src={favicon} alt="logo" width={40} height={40} />
-            <span className="ml-2 text-lg text-primary font-bold">SNSU LRC</span>
+            <span className="ml-2 text-lg text-primary font-bold">
+              SNSU LRC
+            </span>
           </Link>
         </div>
         <div className="flex-1">
@@ -73,6 +76,11 @@ export const adminLinks = [
     name: "Rooms",
     href: "/dashboard/rooms",
     icon: <School />,
+  },
+  {
+    name: "Schedules",
+    href: "/dashboard/schedules",
+    icon: <CalendarDays />,
   },
   {
     name: "Appointments",

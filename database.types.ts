@@ -13,29 +13,32 @@ export type Database = {
         Row: {
           course_and_year: string
           created_at: string
-          date: string
           id: string
           name: string
+          participants_count: number
           purpose: string
           room_id: string
+          schedule_id: string
         }
         Insert: {
           course_and_year: string
           created_at?: string
-          date: string
           id?: string
           name: string
+          participants_count: number
           purpose: string
           room_id?: string
+          schedule_id?: string
         }
         Update: {
           course_and_year?: string
           created_at?: string
-          date?: string
           id?: string
           name?: string
+          participants_count?: number
           purpose?: string
           room_id?: string
+          schedule_id?: string
         }
         Relationships: [
           {
@@ -88,6 +91,41 @@ export type Database = {
           name?: string
         }
         Relationships: []
+      }
+      schedules: {
+        Row: {
+          available: boolean
+          created_at: string
+          end_time: string
+          id: string
+          room_id: string
+          start_time: string
+        }
+        Insert: {
+          available?: boolean
+          created_at?: string
+          end_time: string
+          id?: string
+          room_id?: string
+          start_time: string
+        }
+        Update: {
+          available?: boolean
+          created_at?: string
+          end_time?: string
+          id?: string
+          room_id?: string
+          start_time?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "schedule_room_id_fkey"
+            columns: ["room_id"]
+            isOneToOne: false
+            referencedRelation: "rooms"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       users: {
         Row: {
