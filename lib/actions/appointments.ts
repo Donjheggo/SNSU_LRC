@@ -126,3 +126,21 @@ export async function GetTotalAppointments() {
     return 0;
   }
 }
+
+export async function GetAllAppointments() {
+  try {
+    const supabase = createClient();
+    const { error, data } = await supabase
+      .from("appointments")
+      .select(`*, room_id(*), schedule_id(*)`);
+
+    if (error) {
+      console.error(error);
+      return [];
+    }
+    return data || [];
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
