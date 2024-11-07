@@ -1,5 +1,6 @@
 import SearchBar from "@/components/search-bar";
 import AttendancesTable from "@/components/attendances/table";
+// import ExportButton from "@/components/attendances/export-button";
 
 export default function Attendances({
   searchParams,
@@ -15,6 +16,7 @@ export default function Attendances({
       <div className="mt-5">
         <div className="flex items-center justify-between">
           <SearchBar />
+          {/* <ExportButton /> */}
         </div>
         <div className="mt-2">
           <AttendancesTable searchQuery={searchQuery} page={page} />

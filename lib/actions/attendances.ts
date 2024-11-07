@@ -102,3 +102,19 @@ export async function GetTotalAttendances() {
     return 0;
   }
 }
+
+export async function GetAllAttendance() {
+  try {
+    const supabase = createClient();
+    const { error, data } = await supabase.from("attendances").select("*");
+
+    if (error) {
+      console.error(error);
+      return [];
+    }
+    return data || [];
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}

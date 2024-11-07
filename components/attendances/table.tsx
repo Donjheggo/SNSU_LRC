@@ -42,6 +42,7 @@ export default async function AttendancesTable({
   ]);
 
   const totalPages = Math.ceil(totalAttendances / items_per_page);
+
   return (
     <Card className="w-full shadow-none bg-background">
       <CardHeader>
@@ -54,7 +55,10 @@ export default async function AttendancesTable({
             <TableRow>
               <TableHead className="table-cell">ID Number</TableHead>
               <TableHead className="table-cell">Name</TableHead>
-              <TableHead className="table-cell">Course Year and Section</TableHead>
+              <TableHead className="table-cell">
+                Course Year and Section
+              </TableHead>
+              <TableHead className="table-cell">Submitted</TableHead>
               <TableHead>
                 <span className="sr-only">Actions</span>
               </TableHead>
@@ -69,6 +73,10 @@ export default async function AttendancesTable({
                 <TableCell className="font-semibold">{item.name}</TableCell>
                 <TableCell className="font-semibold">
                   {item.course_and_year}
+                </TableCell>
+                <TableCell className="font-semibold">
+                  {new Date(item.created_at).toLocaleTimeString()} -{" "}
+                  {new Date(item.created_at).toDateString()}
                 </TableCell>
                 <TableCell>
                   <DropdownMenu>
