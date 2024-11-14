@@ -67,6 +67,7 @@ export default function Book() {
       !formData.get("schedule_id") ||
       !formData.get("name") ||
       !formData.get("course_and_year") ||
+      !formData.get("organization_name") ||
       !formData.get("purpose") ||
       !formData.get("participants_count")
     ) {
@@ -90,7 +91,7 @@ export default function Book() {
 
   return (
     <HomeLayout>
-      <Card className="w-auto md:w-[600px] mx-auto h-[550px]">
+      <Card className="w-auto md:w-[600px] mx-auto h-[600px]">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl text-primary">
             Book an Appointment
@@ -192,6 +193,19 @@ export default function Book() {
                 <Input
                   name="course_and_year"
                   id="course_and_year"
+                  type="text"
+                  placeholder=""
+                  className="col-span-3"
+                  required
+                />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="organization_name" className="text-right">
+                  Organization name
+                </Label>
+                <Input
+                  name="organization_name"
+                  id="organization_name"
                   type="text"
                   placeholder=""
                   className="col-span-3"

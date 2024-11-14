@@ -47,6 +47,7 @@ export default async function AppointmentsTable({
             <TableRow>
               <TableHead className="table-cell">Name</TableHead>
               <TableHead className="table-cell">Course and Year</TableHead>
+              <TableHead className="table-cell">Organization Name</TableHead>
               <TableHead className="table-cell">Room</TableHead>
               <TableHead className="table-cell">Schedule</TableHead>
               <TableHead className="table-cell">Participants count</TableHead>
@@ -60,6 +61,7 @@ export default async function AppointmentsTable({
                   {item.name}
                 </TableCell>
                 <TableCell>{item.course_and_year}</TableCell>
+                <TableCell>{item.organization_name}</TableCell>
                 <TableCell>{item.room_id.name}</TableCell>
                 <TableCell>
                   {new Date(item.schedule_id.start_time).toLocaleDateString()} -{" "}

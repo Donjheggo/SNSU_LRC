@@ -62,6 +62,7 @@ export async function CreateAppointment(formData: FormData) {
         schedule_id: formData.get("schedule_id"),
         name: formData.get("name"),
         course_and_year: formData.get("course_and_year"),
+        organization_name: formData.get("organization_name"),
         purpose: formData.get("purpose"),
         participants_count: formData.get("participants_count"),
       })

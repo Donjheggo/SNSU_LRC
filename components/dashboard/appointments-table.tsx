@@ -44,6 +44,7 @@ export default async function AppointmentsTable({
             <TableRow>
               <TableHead className="table-cell">Name</TableHead>
               <TableHead className="table-cell">Course and Year</TableHead>
+              <TableHead className="table-cell">Organization Name</TableHead>
               <TableHead className="table-cell">Room</TableHead>
               <TableHead className="table-cell">Date</TableHead>
               <TableHead className="table-cell">Purpose</TableHead>
@@ -55,6 +56,9 @@ export default async function AppointmentsTable({
                 <TableCell className="font-semibold">{item.name}</TableCell>
                 <TableCell className="font-semibold">
                   {item.course_and_year}
+                </TableCell>
+                <TableCell className="font-semibold">
+                  {item.organization_name}
                 </TableCell>
                 <TableCell className="font-semibold">
                   {item.room_id.name}
