@@ -4,7 +4,7 @@ import SearchBar from "@/components/search-bar";
 import AppointmentsTable from "@/components/appointments/table";
 import { GetAllAppointments } from "@/lib/actions/appointments";
 import { Tables } from "@/database.types";
-import ExportToExcelButton from "@/components/export-button";
+import ExportToExcelButton from "@/components/appointments-export-button";
 
 export default async function Appointments({
   searchParams,

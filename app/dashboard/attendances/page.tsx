@@ -1,14 +1,16 @@
 import SearchBar from "@/components/search-bar";
 import AttendancesTable from "@/components/attendances/table";
-// import ExportButton from "@/components/attendances/export-button";
+import { GetAllAttendance } from "@/lib/actions/attendances";
+import AttendanceExportButton from "@/components/attendances-export-button";
 
-export default function Attendances({
+export default async function Attendances({
   searchParams,
 }: {
   searchParams?: { query?: string; page?: string };
 }) {
   const searchQuery = searchParams?.query || "";
   const page = Number(searchParams?.page) || 1;
+  const attendances = await GetAllAttendance();
 
   return (
     <div className="container max-w-screen-lg mx-auto">
@@ -16,7 +18,7 @@ export default function Attendances({
       <div className="mt-5">
         <div className="flex items-center justify-between">
           <SearchBar />
-          {/* <ExportButton /> */}
+          <AttendanceExportButton attendances={attendances} />
         </div>
         <div className="mt-2">
           <AttendancesTable searchQuery={searchQuery} page={page} />

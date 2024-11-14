@@ -2,6 +2,7 @@ import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import * as XLSX from "xlsx";
 import type { AppointmentsT } from "@/app/dashboard/appointments/page";
+import { Tables } from "@/database.types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -15,7 +16,7 @@ export const FormatDateTime = (date: Date) => {
   return localDateData;
 };
 
-export const ExportToExcel = (data: AppointmentsT[]) => {
+export const AppointmentsExportToExcel = (data: AppointmentsT[]) => {
   const exportData = data.map((item) => ({
     Name: item.name,
     "Course and Year": item.course_and_year,
@@ -37,4 +38,22 @@ export const ExportToExcel = (data: AppointmentsT[]) => {
   const workbook = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(workbook, worksheet, "Appointments");
   XLSX.writeFile(workbook, "appointments.xlsx");
+};
+
+type AttendancesT = Tables<"attendances">;
+
+export const AttendanceExportToExcel = (data: AttendancesT[]) => {
+  const exportData = data.map((item) => ({
+    "ID Number": item.id_number,
+    Name: item.name,
+    "Course Year and Section": item.course_and_year,
+    Submitted: `${new Date(item.created_at).toLocaleDateString()} ${new Date(
+      item.created_at
+    ).toLocaleTimeString()}`,
+  }));
+
+  const worksheet = XLSX.utils.json_to_sheet(exportData);
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "Attendances");
+  XLSX.writeFile(workbook, "attendances.xlsx");
 };

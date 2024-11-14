@@ -2,10 +2,10 @@
 
 import { Button } from "@/components/ui/button";
 import { File } from "lucide-react";
-import { ExportToExcel } from "@/lib/utils";
+import { AppointmentsExportToExcel } from "@/lib/utils";
 import type { AppointmentsT } from "@/app/dashboard/appointments/page";
 
-export default function ExportToExcelButton({
+export default function AppointmentExportButton({
   appointments,
 }: {
   appointments: AppointmentsT[];
@@ -15,7 +15,7 @@ export default function ExportToExcelButton({
     <Button
       variant="default"
       className="flex items-center"
-      onClick={() => ExportToExcel(appointments)}
+      onClick={() => AppointmentsExportToExcel(appointments)}
     >
       <File size={18} className="mr-2" /> Export
     </Button>
